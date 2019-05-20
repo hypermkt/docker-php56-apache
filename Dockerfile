@@ -25,5 +25,22 @@ RUN apt install -y php5.6-xml php5.6-dev && \
   update-alternatives --set phpize /usr/bin/phpize5.6 && \
   pecl channel-update pecl.php.net
 
+# Install extension via PECL
+RUN apt-get install -y imagemagick libmagickcore-dev libmagickwand-dev libssh2-1-dev
+RUN pecl install imagick
+RUN pecl install memcache
+RUN pecl install ssh2
+
+COPY php/imagick.ini /etc/php/5.6/mods-available/imagick.ini
+COPY php/memcache.ini /etc/php/5.6/mods-available/memcache.ini
+COPY php/ssh2.ini /etc/php/5.6/mods-available/ssh2.ini
+
+RUN ln -sf /etc/php/5.6/mods-available/imagick.ini /etc/php/5.6/apache2/conf.d/20-imagick.ini && \
+  ln -sf /etc/php/5.6/mods-available/memcache.ini /etc/php/5.6/apache2/conf.d/20-memcache.ini && \
+  ln -sf /etc/php/5.6/mods-available/ssh2.ini /etc/php/5.6/apache2/conf.d/20-ssh2.ini && \
+  ln -sf /etc/php/5.6/mods-available/imagick.ini /etc/php/5.6/cli/conf.d/20-imagick.ini && \
+  ln -sf /etc/php/5.6/mods-available/memcache.ini /etc/php/5.6/cli/conf.d/20-memcache.ini && \
+  ln -sf /etc/php/5.6/mods-available/ssh2.ini /etc/php/5.6/cli/conf.d/20-ssh2.ini
+
 EXPOSE 80
 CMD ["apachectl", "-D", "FOREGROUND"]
