@@ -42,5 +42,8 @@ RUN ln -sf /etc/php/5.6/mods-available/imagick.ini /etc/php/5.6/apache2/conf.d/2
   ln -sf /etc/php/5.6/mods-available/memcache.ini /etc/php/5.6/cli/conf.d/20-memcache.ini && \
   ln -sf /etc/php/5.6/mods-available/ssh2.ini /etc/php/5.6/cli/conf.d/20-ssh2.ini
 
+# Enable apache2 modules
+RUN a2enmod rewrite
+
 EXPOSE 80
 CMD ["apachectl", "-D", "FOREGROUND"]
