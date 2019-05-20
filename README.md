@@ -9,7 +9,7 @@ $ docker build ./ -t hypermkt/php56-apache
 ## ssh
 
 ```
-$ docker run -it hypermkt/php56-apache
+$ docker run -it hypermkt/php56-apache bash
 ```
 
 ## Release
